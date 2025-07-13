@@ -1,0 +1,28 @@
+[
+  {
+    "path": "assets/images/ui",
+    "files": [
+      {
+        "type": "image",
+        "key": "background",
+        "url": "bg.png"
+      },
+      {
+        "type": "image",
+        "key": "logo",
+        "url": "logo.png"
+      }
+    ]
+  },
+  {
+    "path": "assets/images/boss",
+    "files": [
+      {
+        "type": "aseprite",
+        "key": "BOSS",
+        "textureURL": "boss.png",
+        "atlasURL": "boss-action.json"
+      }
+    ]
+  }
+]
