@@ -1,0 +1,23 @@
+---
+description: |
+  在当前 Phaser.js + Vite + TypeScript 项目中，AI 助手必须严格遵守以下规则，以确保代码修改安全、优化和符合最佳实践：
+
+  1. **文档查询要求**：每次在修改涉及 Phaser.js 的代码（例如场景、精灵、物理、输入事件等）前，必须先使用 Context7 MCP 工具查询 Phaser.js 文档。具体步骤：
+     - 先调用 `mcp_context7_resolve-library-id` 以获取 Phaser.js 的 Context7 兼容库 ID（例如，使用 libraryName: "phaser" 或 "phaser.js"）。
+     - 然后调用 `mcp_context7_get-library-docs` 以获取相关主题的最新文档（例如，topic: "scenes management" 或 "sprite animation"，并设置合适的 tokens 值以获取足够上下文）。
+     - 查询后，基于文档内容分析修改的可行性和潜在问题，并在实际编辑前确认。
+
+  2. **Phaser.js 最佳实践要求**：
+     - **场景组织**：始终使用 Phaser.Scene 来组织游戏逻辑。将游戏分为多个场景（如 Boot、Preloader、MainMenu、Game、GameOver），每个场景专注于单一责任（例如，Preloader 只处理资产加载）。避免在单一场景中堆积过多逻辑。
+     - **资产加载**：在 Preloader 场景中使用 Phaser.Loader 异步加载所有资产（如图像、音频）。使用 `this.load.image()` 或 `this.load.spritesheet()`，并在加载完成后切换场景。避免在游戏循环中加载资产，以防性能问题。
+     - **性能优化**：使用对象池（Phaser.GameObjects.Group with `createMultiple` 和 `get` 方法）来重用精灵，避免频繁创建/销毁对象。限制 update() 方法中的计算，启用物理引擎的优化（如 Arcade Physics 的 `debug: false` 在生产环境中）。针对 Web 游戏，目标帧率为 60 FPS，并监控内存使用。
+     - **输入处理**：使用 Phaser.Input 管理键盘、鼠标或触摸事件。优先使用事件监听器（如 `this.input.on('pointerdown', callback)`），并在场景 shutdown 时移除监听器以防内存泄漏。
+     - **状态管理**：使用 Phaser 的 Registry 或自定义事件系统管理全局状态（如分数、生命值）。避免直接修改全局变量；改为使用事件发射（如 `this.events.emit('scoreUpdate', value)`）。
+     - **TypeScript 集成**：严格使用 Phaser 的 TypeScript 类型定义。扩展 Phaser.Scene 时，使用泛型或接口定义自定义属性。启用严格类型检查，并在 Vite 配置中确保 Phaser 类型正确导入。
+     - **错误处理和调试**：在开发中使用 Phaser 的 debug 模式（如 physics debug），但在生产中禁用。添加日志记录，并在关键点（如场景切换）添加 try-catch 以处理潜在错误。
+     - **代码风格**：遵循 Phaser.js 社区规范，如使用 camelCase 命名、保持方法简短（不超过 50 行），并在修改前检查 git 状态以避免冲突。
+globs:
+  - "src/**/*.ts"
+  - "src/**/*.js"
+alwaysApply: true
+---
