@@ -1,9 +1,10 @@
 import { Scene } from 'phaser';
+import { Boss } from '../game-object/boss/boss';
+import { ASSET_KEYS } from '../../common/assets';
 
 export class Game extends Scene {
   camera: Phaser.Cameras.Scene2D.Camera;
-  background: Phaser.GameObjects.Image;
-  msg_text: Phaser.GameObjects.Text;
+  boss: Boss;
 
   constructor() {
     super('Game');
@@ -11,9 +12,14 @@ export class Game extends Scene {
 
   create() {
     this.camera = this.cameras.main;
-    this.camera.setBackgroundColor(0x00ff00);
+    this.camera.setBackgroundColor(0xffffff);
 
-    this.background = this.add.image(512, 384, 'background');
-    this.background.setAlpha(0.5);
+    // 创建boss并放置在场景中心
+    this.boss = new Boss({
+      scene: this,
+      position: { x: 512, y: 400 },
+      assetKey: ASSET_KEYS.BOSS,
+      frame: 0,
+    });
   }
 }

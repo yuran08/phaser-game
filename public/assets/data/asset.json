@@ -19,7 +19,7 @@
     "files": [
       {
         "type": "aseprite",
-        "key": "BOSS",
+        "key": "boss",
         "textureURL": "boss.png",
         "atlasURL": "boss-action.json"
       }
